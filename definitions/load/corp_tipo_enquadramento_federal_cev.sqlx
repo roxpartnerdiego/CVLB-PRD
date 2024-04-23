@@ -1,0 +1,17 @@
+config {
+    type: "incremental",
+    schema: "RAW",
+    tags: ["sqlserver", "corp"]
+}
+SELECT 
+    SYS_CHANGE_VERSION,	
+    SYS_CHANGE_OPERATION,	
+    SYS_CHANGE_CREATION_VERSION,	
+    COMMIT_TIME,
+    CT_COD_TIPO_ENQUADRAMENTO,	
+    COD_TIPO_ENQUADRAMENTO,
+	NOM_TIPO_ENQUADRAMENTO,
+    _PARTITIONTIME AS PARTITIONTIME
+FROM `LAND.corp_tipo_enquadramento_federal_cev`
+
+${ when(incremental(), `WHERE _PARTITIONTIME > (SELECT MAX(PARTITIONTIME) FROM ${self()})`) }

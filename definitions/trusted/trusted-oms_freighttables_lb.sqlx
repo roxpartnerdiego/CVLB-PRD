@@ -1,0 +1,80 @@
+config { 
+    dependencies: ["oms_freighttables_lb"], 
+    tags: ["postgresql"]
+}
+
+MERGE
+`TRUSTED.oms_freighttables_lb` T
+USING
+(
+WITH
+TABELA AS (
+SELECT
+DISTINCT id, 
+    CAST(courier_type_id AS INT64) AS courier_type_id, 
+    courier_id,
+    courier_name,
+    sap_id,
+    CAST(store_number AS INT64) AS store_number,
+    store_account,
+    address_id,
+    CAST(cod_transportadora AS INT64) AS cod_transportadora,
+    CAST(active AS BOOL) AS active,
+    CAST(ic_cotacao_frete AS BOOL) AS ic_cotacao_frete
+FROM
+`RAW.oms_freighttables_lb` A
+WHERE
+PARTITIONTIME=(
+SELECT
+  MAX(PARTITIONTIME)
+FROM
+  `RAW.oms_freighttables_lb`))
+SELECT
+*
+FROM
+TABELA) S
+ON
+T.id = S.id
+WHEN MATCHED THEN UPDATE SET 
+T.id = S.id,
+T.courier_type_id = S.courier_type_id,
+T.courier_id = S.courier_id,
+T.courier_name = S.courier_name,
+T.sap_id = S.sap_id,
+T.store_number = S.store_number,
+T.store_account = S.store_account,
+T.address_id = S.address_id,
+T.cod_transportadora = S.cod_transportadora,
+T.active = S.active,
+T.ic_cotacao_frete = S.ic_cotacao_frete
+WHEN NOT MATCHED
+THEN
+INSERT
+(   id,
+    courier_type_id,
+    courier_id,
+    courier_name,
+    sap_id,
+    store_number,
+    store_account,
+    address_id,
+    cod_transportadora,
+    active,
+    ic_cotacao_frete )
+VALUES
+(
+    S.id,
+    S.courier_type_id, 
+    S.courier_id,
+    S.courier_name,
+    S.sap_id,
+    S.store_number,
+    S.store_account,
+    S.address_id,
+    S.cod_transportadora,
+    S.active,
+    S.ic_cotacao_frete )
+WHEN NOT MATCHED BY SOURCE
+THEN
+DELETE
+;

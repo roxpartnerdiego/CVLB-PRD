@@ -1,0 +1,49 @@
+config {
+  tags: ["cubo-vendas"]
+}
+
+TRUNCATE TABLE REFINED.VTEX_ITEM;
+
+INSERT INTO
+  REFINED.VTEX_ITEM (
+SELECT
+    COALESCE(LB.order_id, CEV.order_id) AS order_id,
+    COALESCE(LB.item_unique_id, CEV.item_unique_id) AS item_unique_id,
+    COALESCE(LB.item_id, CEV.item_id) AS item_id,
+    COALESCE(LB.item_product_id, CEV.item_product_id) AS item_product_id,
+    COALESCE(LB.item_ean, CEV.item_ean) AS item_ean,
+    COALESCE(LB.item_quantity, CEV.item_quantity) AS item_quantity,
+    COALESCE(LB.item_pos, CEV.item_pos) AS item_pos,
+    COALESCE(LB.item_name, CEV.item_name) AS item_name,
+    COALESCE(LB.item_price, CEV.item_price) AS item_price,
+    COALESCE(LB.item_list_price, CEV.item_list_price) AS item_list_price,
+    COALESCE(LB.item_commission, CEV.item_commission) AS item_commission,
+    COALESCE(LB.item_tax, CEV.item_tax) AS item_tax,
+    COALESCE(LB.item_presale_date, CEV.item_presale_date) AS item_presale_date,
+    COALESCE(LB.item_brandname, CEV.item_brandname) AS item_brandname,
+    COALESCE(LB.item_category_name1, CEV.item_category_name1) AS item_category_name1,
+    COALESCE(LB.item_category_name2, CEV.item_category_name2) AS item_category_name2,
+    COALESCE(LB.item_category_name3, CEV.item_category_name3) AS item_category_name3,
+    COALESCE(LB.item_product_cluster_id, CEV.item_product_cluster_id) AS item_product_cluster_id,
+    COALESCE(LB.item_commercial_condition_id, CEV.item_commercial_condition_id) AS item_commercial_condition_id,
+    COALESCE(LB.item_offering_type, CEV.item_offering_type) AS item_offering_type,
+    COALESCE(LB.item_measurement_unit, CEV.item_measurement_unit) AS item_measurement_unit,
+    COALESCE(LB.item_unit_multiplier, CEV.item_unit_multiplier) AS item_unit_multiplier,
+    COALESCE(LB.item_selling_price, CEV.item_selling_price) AS item_selling_price,
+    COALESCE(LB.item_shipping_price, CEV.item_shipping_price) AS item_shipping_price,
+    COALESCE(LB.item_reward_value, CEV.item_reward_value) AS item_reward_value,
+    COALESCE(LB.item_freight_commission, CEV.item_freight_commission) AS item_freight_commission,
+    COALESCE(LB.item_tax_code, CEV.item_tax_code) AS item_tax_code,
+    COALESCE(LB.item_cost_price, CEV.item_cost_price) AS item_cost_price,
+    COALESCE(LB.selected_sla, CEV.selected_sla) AS selected_sla,
+    COALESCE(LB.delivery_channel, CEV.delivery_channel) AS delivery_channel,
+    CURRENT_TIMESTAMP() AS DATA_ATUALIZACAO,
+    CASE 
+        WHEN LB.order_id IS NOT NULL AND CEV.order_id IS NOT NULL THEN "CVLB" 
+        WHEN LB.order_id IS NULL THEN "CEV"
+        WHEN CEV.order_id IS NULL THEN "LB"
+    END AS BANDEIRA
+FROM `TRUSTED.vtex_item_lb` LB
+FULL JOIN `TRUSTED.vtex_item_cev` CEV
+ON LB.order_id = CEV.order_id
+  )

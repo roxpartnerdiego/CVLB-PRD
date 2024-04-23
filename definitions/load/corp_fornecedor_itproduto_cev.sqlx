@@ -1,0 +1,27 @@
+config {
+    type: "incremental",
+    schema: "RAW",
+    tags: ["sqlserver", "corp"]
+}
+SELECT 
+    SYS_CHANGE_VERSION,	
+    SYS_CHANGE_OPERATION,	
+    SYS_CHANGE_CREATION_VERSION,	
+    COMMIT_TIME,	
+    CT_COD_ITPROD,
+    COD_ITPROD,
+    COD_FORN,
+    COD_ITEM_FORNECEDOR,
+    NOM_ITEM_FORNECEDOR,
+    COD_EMBAL,
+    COD_USU_INC,
+    COD_USU_ALT,
+    DAT_INC,
+    DAT_ALT,
+    DAT_EXPORTACAO,
+    IND_OPER_EXPORTACAO,
+    NUM_CODBARRA,
+    _PARTITIONTIME AS PARTITIONTIME
+FROM `LAND.corp_fornecedor_itproduto_cev`
+
+${ when(incremental(), `WHERE _PARTITIONTIME > (SELECT MAX(PARTITIONTIME) FROM ${self()})`) }

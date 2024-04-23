@@ -1,0 +1,44 @@
+config {
+    dependencies: ["plancom_depara_organograma_lb"],
+    tags: ["sqlserver", "plancom"]
+}
+
+MERGE
+  `TRUSTED.plancom_depara_organograma_lb` T
+USING
+  (
+  WITH
+    TABELA AS (
+    SELECT
+      DISTINCT COD_CATEGORIA,
+      NOM_CATEGORIA_COMPLETO,
+      NOM_GM,
+      NOM_GC
+    FROM
+      `RAW.plancom_depara_organograma_lb` A
+    WHERE
+      PARTITIONTIME=(
+      SELECT
+        MAX(PARTITIONTIME)
+      FROM
+        `RAW.plancom_depara_organograma_lb`))
+  SELECT
+    *
+  FROM
+    TABELA) S
+ON
+  T.COD_CATEGORIA = S.COD_CATEGORIA
+  WHEN MATCHED THEN UPDATE SET T.COD_CATEGORIA = S.COD_CATEGORIA, T.NOM_CATEGORIA_COMPLETO = S.NOM_CATEGORIA_COMPLETO, T.NOM_GM = S.NOM_GM, T.NOM_GC = S.NOM_GC
+  WHEN NOT MATCHED
+  THEN
+INSERT
+  ( COD_CATEGORIA,
+    NOM_CATEGORIA_COMPLETO,
+    NOM_GM,
+    NOM_GC )
+VALUES
+  ( S.COD_CATEGORIA, S.NOM_CATEGORIA_COMPLETO, S.NOM_GM, S.NOM_GC )
+  WHEN NOT MATCHED BY SOURCE
+  THEN
+DELETE
+  ;
