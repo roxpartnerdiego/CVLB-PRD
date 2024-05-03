@@ -1,6 +1,6 @@
 config {
 	dependencies: ["oms_contested_items_cev"],
-	tags: ["postgresql"]
+	tags: ["postgresql", "oms"]
 }
 
 MERGE
