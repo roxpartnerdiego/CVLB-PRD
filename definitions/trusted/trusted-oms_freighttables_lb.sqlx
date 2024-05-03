@@ -74,7 +74,4 @@ VALUES
     S.cod_transportadora,
     S.active,
     S.ic_cotacao_frete )
-WHEN NOT MATCHED BY SOURCE
-THEN
-DELETE
 ;

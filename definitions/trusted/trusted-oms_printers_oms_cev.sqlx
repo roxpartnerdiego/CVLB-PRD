@@ -45,8 +45,4 @@ VALUES
 	S.printer_code,
 	S.printer_name,
 	S.store_code,
-	S.inserted_date ) 
-WHEN NOT MATCHED BY SOURCE
-THEN
-DELETE 
-;
+	S.inserted_date ) ;

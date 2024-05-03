@@ -96,8 +96,4 @@ VALUES
 	S.store_visibility,
 	S.date_shipping,
 	S.date_estimate_transit,
-	S.date_contest_estimate )
-WHEN NOT MATCHED BY SOURCE
-THEN
-DELETE
-;
+	S.date_contest_estimate );

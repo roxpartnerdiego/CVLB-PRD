@@ -105,8 +105,4 @@ VALUES
 	S.cancel_date,
 	S.cancel_order,
 	S.cancel_detail ,
-	S.unity_price ) 
-WHEN NOT MATCHED BY SOURCE
-THEN
-DELETE 
-;
+	S.unity_price ) ;

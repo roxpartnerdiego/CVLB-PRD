@@ -65,8 +65,4 @@ VALUES
 	S.description,
 	S.date_status,
 	S.sap_id,
-	S.date_sync  ) 
-WHEN NOT MATCHED BY SOURCE
-THEN
-DELETE 
-;
+	S.date_sync  ) ;

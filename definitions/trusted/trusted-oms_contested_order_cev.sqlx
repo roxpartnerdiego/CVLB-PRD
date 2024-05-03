@@ -49,8 +49,4 @@ VALUES
 	S.order_id,
 	S.type,
 	S.contestation_date,
-	S.user_id ) 
-WHEN NOT MATCHED BY SOURCE
-THEN
-DELETE 
-;
+	S.user_id ) ;

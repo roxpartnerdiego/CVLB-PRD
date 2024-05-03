@@ -33,8 +33,4 @@ INSERT
   ( id,
     name )
 VALUES
-  ( S.id, S.name )
-  WHEN NOT MATCHED BY SOURCE
-  THEN
-DELETE
-  ;
+  ( S.id, S.name );

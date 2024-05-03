@@ -67,8 +67,4 @@ VALUES
     S.store_account,
     S.address_id,
     S.cod_transportadora,
-    S.active )
-WHEN NOT MATCHED BY SOURCE
-THEN
-DELETE
-;
+    S.active );

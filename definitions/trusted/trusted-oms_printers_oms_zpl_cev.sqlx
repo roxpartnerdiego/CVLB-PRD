@@ -49,8 +49,4 @@ VALUES
     S.num_serie,
     S.num_ip,
     S.inserted_date,
-    S.store_code ) 
-WHEN NOT MATCHED BY SOURCE
-THEN
-DELETE 
-;
+    S.store_code ) ;

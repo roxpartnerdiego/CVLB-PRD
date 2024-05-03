@@ -113,8 +113,4 @@ VALUES
 	S.cancel_detail,
 	S.unity_price,
 	S.sap_code,
-	S.imei  )
-WHEN NOT MATCHED BY SOURCE
-THEN
-DELETE
-;
+	S.imei  );

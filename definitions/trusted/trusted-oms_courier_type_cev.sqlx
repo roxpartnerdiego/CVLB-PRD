@@ -37,8 +37,4 @@ INSERT
 VALUES
 (
 	 S.id,
-	 S.type ) 
-WHEN NOT MATCHED BY SOURCE
-THEN
-DELETE 
-;
+	 S.type ) ;

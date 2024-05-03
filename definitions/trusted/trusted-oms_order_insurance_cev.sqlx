@@ -61,8 +61,4 @@ VALUES
 	 S.price,
 	 S.total_price,
 	 S.discount,
-	 S.discount_name ) 
-WHEN NOT MATCHED BY SOURCE
-THEN
-DELETE 
-;
+	 S.discount_name ) ;

@@ -69,8 +69,4 @@ VALUES
 	S.user_id,
 	S.system_name,
 	S.details,
-	S.rightnow_id ) 
-WHEN NOT MATCHED BY SOURCE
-THEN
-DELETE 
-;
+	S.rightnow_id ) ;

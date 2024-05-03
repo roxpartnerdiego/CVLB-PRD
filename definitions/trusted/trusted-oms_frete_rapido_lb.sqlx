@@ -65,8 +65,4 @@ VALUES
     S.charged_shipping_value,
     S.estimated_delivery_date,
     S.response_json,
-    S.courier_type_id  ) 
-WHEN NOT MATCHED BY SOURCE
-THEN
-DELETE 
-;
+    S.courier_type_id  ) ;

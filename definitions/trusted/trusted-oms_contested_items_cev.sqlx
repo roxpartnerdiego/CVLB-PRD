@@ -73,8 +73,4 @@ VALUES
 	S.contest_description,
 	S.stock_adjustment,
 	S.adjustment_date,
-	S.inventory_found  ) 
-WHEN NOT MATCHED BY SOURCE
-THEN
-DELETE 
-;
+	S.inventory_found  ) ;

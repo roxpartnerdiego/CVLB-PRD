@@ -66,7 +66,4 @@ INSERT
     sequence )
 VALUES
   ( S.id, S.creation_date, S.order_id, S.nfe_protocol, S.nfe_type, S.nfe_number, S.nfe_serie, S.nfe_message, S.nfe_link, S.nfe_xml, S.nfe_doc, S.nfe_key, S.nfe_sync, S.nfe_date_sync, S.nfe_canceled, S.nfe_canceled_date, S.nfe_canceled_reason, S.sequence )
-  WHEN NOT MATCHED BY SOURCE
-  THEN
-DELETE
   ;

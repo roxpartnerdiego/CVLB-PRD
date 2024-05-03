@@ -171,8 +171,4 @@ VALUES
 	S.nfe_transf_key,
 	S.nfe_canceled,
 	S.nfe_canceled_date,
-	S.nfe_canceled_reason  )
-WHEN NOT MATCHED BY SOURCE
-THEN
-DELETE
-;
+	S.nfe_canceled_reason  );

@@ -100,8 +100,4 @@ VALUES
 	S.nfe_canceled,
 	S.nfe_canceled_date,
 	S.nfe_canceled_reason,
-	S.sequence )
-WHEN NOT MATCHED BY SOURCE
-THEN
-DELETE
-;
+	S.sequence );
