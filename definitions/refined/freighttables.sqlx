@@ -1,4 +1,5 @@
 config {
+    dependencies:["trusted-oms_freighttables_cev", "trusted-oms_freighttables_lb"],
     tags: ["cubo-vendas", "oms"]
 }
 

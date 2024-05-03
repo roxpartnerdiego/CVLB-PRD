@@ -1,4 +1,5 @@
 config {
+    dependencies: ["trusted-oms_shipping_cev", "trusted-oms_shipping_lb"],
     tags: ["cubo-vendas", "oms"]
 }
 

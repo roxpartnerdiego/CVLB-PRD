@@ -32,13 +32,10 @@ WHEN MATCHED THEN UPDATE SET
 WHEN NOT MATCHED 
 THEN
 INSERT 
-(   id
+(   id,
   	name  ) 
 VALUES
 (
 	S.id,
    	S.name ) 
-WHEN NOT MATCHED BY SOURCE
-THEN
-DELETE 
 ;

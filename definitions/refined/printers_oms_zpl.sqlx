@@ -1,4 +1,5 @@
 config {
+    dependencies: ["trusted-oms_printers_oms_zpl_cev"],
     tags: ["cubo-vendas", "oms"]
 }
 

@@ -1,4 +1,5 @@
 config {
+    dependencies: ["trusted-oms_issue_cev", "trusted-oms_issue_lb"],
     tags: ["cubo-vendas", "oms"]
 }
 

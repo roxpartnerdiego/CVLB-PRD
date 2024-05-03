@@ -1,4 +1,5 @@
 config {
+    dependencies: ["trusted-oms_frete_rapido_lb"],
     tags: ["cubo-vendas", "oms"]
 }
 
