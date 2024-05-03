@@ -1,6 +1,6 @@
 config {
     dependencies: ["trusted-oms_order_items_cev", "trusted-oms_order_items_lb"],
-    tags: ["cubo-vendas", "oms"]
+    tags: ["cubo-vendas", "oms", "order_items"]
 }
 
 TRUNCATE TABLE REFINED.ORDER_ITEMS;

@@ -1,6 +1,6 @@
 config {
     dependencies: ["oms_order_items_lb"],
-    tags: ["postgresql", "oms"]
+    tags: ["postgresql", "oms", "order_items"]
 }
 
 MERGE
