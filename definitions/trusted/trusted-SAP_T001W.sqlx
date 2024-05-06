@@ -1,10 +1,10 @@
 config {
-    dependencies: ["sap_t001w"],
+    dependencies: ["SAP_T001W"],
     tags: ["sap"]
 }
 
 MERGE
-  `TRUSTED.sap_t001w` T
+  `TRUSTED.SAP_T001W` T
 USING
   (
   WITH
@@ -74,13 +74,13 @@ USING
       dep_store,
       recordstamp
     FROM
-      `RAW.sap_t001w` A
+      `RAW.SAP_T001W` A
     WHERE
       PARTITIONTIME=(
       SELECT
         MAX(PARTITIONTIME)
       FROM
-        `RAW.sap_t001w`))
+        `RAW.SAP_T001W`))
   SELECT
     *
   FROM

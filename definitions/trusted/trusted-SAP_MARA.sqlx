@@ -1,10 +1,10 @@
 config {
-    dependencies: ["sap_mara"],
+    dependencies: ["SAP_MARA"],
     tags: ["sap"]
 }
 
 MERGE
-  `TRUSTED.sap_mara` T
+  `TRUSTED.SAP_MARA` T
 USING
   (
   WITH
@@ -234,13 +234,13 @@ USING
         ZZSENSIB_PB,
         ZZCOMPARAB
     FROM
-      `RAW.sap_mara` A
+      `RAW.SAP_MARA` A
     WHERE
       PARTITIONTIME=(
       SELECT
         MAX(PARTITIONTIME)
       FROM
-        `RAW.sap_mara`))
+        `RAW.SAP_MARA`))
   SELECT
     *
   FROM

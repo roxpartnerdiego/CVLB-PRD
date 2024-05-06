@@ -1,10 +1,10 @@
 config {
-    dependencies: ["sap_zposcst102"],
+    dependencies: ["SAP_ZPOSCST102"],
     tags: ["sap"]
 }
 
 MERGE
-  `TRUSTED.sap_zposcst102` T
+  `TRUSTED.SAP_ZPOSCST102` T
 USING
   (
   WITH
@@ -55,13 +55,13 @@ USING
       imei,
       recordstamp
     FROM
-        `RAW.sap_zposcst102` A
+        `RAW.SAP_ZPOSCST102` A
     WHERE
       PARTITIONTIME=(
       SELECT
         MAX(PARTITIONTIME)
       FROM
-        `RAW.sap_zposcst102`))
+        `RAW.SAP_ZPOSCST102`))
   SELECT
     *
   FROM

@@ -1,10 +1,10 @@
 config {
-    dependencies: ["sap_wrf1"],
+    dependencies: ["SAP_WRF1"],
     tags: ["sap"]
 }
 
 MERGE
-  `TRUSTED.sap_wrf1` T
+  `TRUSTED.SAP_WRF1` T
 USING
   (
   WITH
@@ -80,13 +80,13 @@ USING
       rma_prof,
       recordstamp
     FROM
-      `RAW.sap_wrf1` A
+      `RAW.SAP_WRF1` A
     WHERE
       PARTITIONTIME=(
       SELECT
         MAX(PARTITIONTIME)
       FROM
-        `RAW.sap_wrf1`))
+        `RAW.SAP_WRF1`))
   SELECT
     *
   FROM

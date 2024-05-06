@@ -1,10 +1,10 @@
 config {
-    dependencies: ["sap_lfa1"],
+    dependencies: ["SAP_LFA1"],
     tags: ["sap"]
 }
 
 MERGE
-  `TRUSTED.sap_lfa1` T
+  `TRUSTED.SAP_LFA1` T
 USING
   (
   WITH
@@ -134,13 +134,13 @@ USING
         submi_relevant,
         zzgtin
     FROM
-      `RAW.sap_lfa1` A
+      `RAW.SAP_LFA1` A
     WHERE
       PARTITIONTIME=(
       SELECT
         MAX(PARTITIONTIME)
       FROM
-        `RAW.sap_lfa1`))
+        `RAW.SAP_LFA1`))
   SELECT
     *
   FROM

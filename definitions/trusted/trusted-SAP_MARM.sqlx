@@ -1,10 +1,10 @@
 config {
-    dependencies: ["sap_marm"],
+    dependencies: ["SAP_MARM"],
     tags: ["sap"]
 }
 
 MERGE
-  `TRUSTED.sap_marm` T
+  `TRUSTED.SAP_MARM` T
 USING
   (
   WITH
@@ -40,13 +40,13 @@ USING
         CAPAUSE,
         TY2TQ
     FROM
-      `RAW.sap_marm` A
+      `RAW.SAP_MARM` A
     WHERE
       PARTITIONTIME=(
       SELECT
         MAX(PARTITIONTIME)
       FROM
-        `RAW.sap_marm`))
+        `RAW.SAP_MARM`))
   SELECT
     *
   FROM

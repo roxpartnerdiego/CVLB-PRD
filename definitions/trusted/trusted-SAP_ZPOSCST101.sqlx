@@ -1,10 +1,10 @@
 config {
-    dependencies: ["sap_zposcst101"],
+    dependencies: ["SAP_ZPOSCST101"],
     tags: ["sap"]
 }
 
 MERGE
-  `TRUSTED.sap_zposcst101` T
+  `TRUSTED.SAP_ZPOSCST101` T
 USING
   (
   WITH
@@ -53,13 +53,13 @@ USING
       cliente_fidel,
       recordstamp
     FROM
-        `RAW.sap_zposcst101` A
+        `RAW.SAP_ZPOSCST101` A
     WHERE
       PARTITIONTIME=(
       SELECT
         MAX(PARTITIONTIME)
       FROM
-        `RAW.sap_zposcst101`))
+        `RAW.SAP_ZPOSCST101`))
   SELECT
     *
   FROM

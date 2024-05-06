@@ -1,10 +1,10 @@
 config {
-    dependencies: ["sap_j_1bbranch"],
+    dependencies: ["SAP_J_1BBRANCH"],
     tags: ["sap"]
 }
 
 MERGE
-  `TRUSTED.sap_j_1bbranch` T
+  `TRUSTED.SAP_J_1BBRANCH` T
 USING
   (
   WITH
@@ -36,13 +36,13 @@ USING
       soure_dangergood,
       recordstamp
     FROM
-        `RAW.sap_j_1bbranch` A
+        `RAW.SAP_J_1BBRANCH` A
     WHERE
       PARTITIONTIME=(
       SELECT
         MAX(PARTITIONTIME)
       FROM
-        `RAW.sap_j_1bbranch`))
+        `RAW.SAP_J_1BBRANCH`))
   SELECT
     *
   FROM
