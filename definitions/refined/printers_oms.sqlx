@@ -1,6 +1,6 @@
 config {
     dependencies: ["trusted-oms_printers_oms_cev"],
-    tags: ["cubo-vendas", "oms", "oms-full"]
+    tags: ["cubo-vendas", "oms", "oms-incr"]
 }
 
 TRUNCATE TABLE REFINED.PRINTERS_OMS;
