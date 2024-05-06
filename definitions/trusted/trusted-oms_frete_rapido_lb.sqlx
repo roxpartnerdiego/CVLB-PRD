@@ -1,6 +1,6 @@
 config {
 	dependencies: ["oms_frete_rapido_lb"],
-	tags: ["postgresql", "oms"]
+	tags: ["postgresql", "oms", "oms-full"]
 }
 
 MERGE

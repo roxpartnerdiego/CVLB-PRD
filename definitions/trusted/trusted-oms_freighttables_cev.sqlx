@@ -1,5 +1,5 @@
 config { dependencies: ["oms_freighttables_cev"], 
-tags: ["postgresql", "oms"]
+tags: ["postgresql", "oms", "oms-full"]
 }
 MERGE
 `TRUSTED.oms_freighttables_cev` T
