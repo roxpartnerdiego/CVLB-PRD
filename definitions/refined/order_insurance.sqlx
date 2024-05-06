@@ -1,6 +1,6 @@
 config {
     dependencies: ["trusted-oms_order_insurance_cev"],
-    tags: ["cubo-vendas", "oms"]
+    tags: ["cubo-vendas", "oms", "oms-full"]
 }
 
 TRUNCATE TABLE REFINED.ORDER_INSURANCE;

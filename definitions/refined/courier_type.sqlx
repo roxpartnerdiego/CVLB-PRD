@@ -1,6 +1,6 @@
 config {
     dependencies: ["trusted-oms_courier_type_cev", "trusted-oms_courier_type_lb"],
-    tags: ["cubo-vendas", "oms"]
+    tags: ["cubo-vendas", "oms", "oms-full"]
 }
 
 TRUNCATE TABLE REFINED.COURIER_TYPE;

@@ -1,6 +1,6 @@
 config {
     dependencies: ["trusted-oms_contested_order_cev", "trusted-oms_contested_order_lb"],
-    tags: ["cubo-vendas", "oms"]
+    tags: ["cubo-vendas", "oms", "oms-incr"]
 }
 
 TRUNCATE TABLE REFINED.CONTESTED_ORDER;

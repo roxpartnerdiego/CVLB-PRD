@@ -1,6 +1,6 @@
 config {
     dependencies: ["trusted-oms_issue_cev", "trusted-oms_issue_lb"],
-    tags: ["cubo-vendas", "oms"]
+    tags: ["cubo-vendas", "oms", "oms-full"]
 }
 
 TRUNCATE TABLE REFINED.ISSUE;
