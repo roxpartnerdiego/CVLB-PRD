@@ -2,6 +2,12 @@ config {
   tags: ["cubo-clientes"]
 }
 
+CREATE TEMP FUNCTION AJUSTAR_DATA(coluna STRING) AS (
+  CASE WHEN coluna <> '' THEN EXTRACT(DATE FROM CAST(REGEXP_REPLACE(REGEXP_REPLACE(coluna, r'\.', '-'), r'(\d{2})-(\d{2})-(\d{4})', r'\3-\2-\1') AS TIMESTAMP))
+  ELSE NULL
+  END
+);
+
 TRUNCATE TABLE REFINED.CLIENT;
 
 INSERT INTO
@@ -34,7 +40,7 @@ SELECT
   id AS ID_CLIENTE,
   CONCAT(first_name, " ",last_name) AS NOME,
   phone AS TELEFONE,
-  EXTRACT(DATE FROM CAST(birth_date AS TIMESTAMP)) AS DAT_NASCIMENTO,
+  CASE WHEN birth_date = 'null' THEN NULL ELSE AJUSTAR_DATA(birth_date) END AS DAT_NASCIMENTO,
   email AS EMAIL,
   doc_number AS NUM_CPF_CNPJ,
   creation_date AS DAT_CRIACAO,
