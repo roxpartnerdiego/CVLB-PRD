@@ -74,6 +74,6 @@ SELECT
     rma_prof,
     recordstamp,
     CURRENT_TIMESTAMP() AS PARTITIONTIME
-FROM `LAND.wrf1`
+FROM `LAND.SAP_WRF1`
 
 ${ when(incremental(), `WHERE recordstamp > (SELECT MAX(recordstamp) FROM ${self()})`) }

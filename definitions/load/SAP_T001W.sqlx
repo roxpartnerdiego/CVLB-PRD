@@ -68,6 +68,6 @@ SELECT
     dep_store,
     recordstamp,
     CURRENT_TIMESTAMP() AS PARTITIONTIME
-FROM `LAND.t001w`
+FROM `LAND.SAP_T001W`
 
 ${ when(incremental(), `WHERE recordstamp > (SELECT MAX(recordstamp) FROM ${self()})`) }

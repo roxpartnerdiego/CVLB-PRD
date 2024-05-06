@@ -47,6 +47,6 @@ SELECT
     cliente_fidel,
     recordstamp,
     CURRENT_TIMESTAMP() AS PARTITIONTIME
-FROM `LAND.SAP_zposcst101`
+FROM `LAND.SAP_ZPOSCST101`
 
 ${ when(incremental(), `WHERE recordstamp > (SELECT MAX(recordstamp) FROM ${self()})`) }

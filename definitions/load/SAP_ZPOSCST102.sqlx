@@ -49,6 +49,6 @@ SELECT
     imei,
     recordstamp,
     CURRENT_TIMESTAMP() AS PARTITIONTIME
-FROM `LAND.zposcst102`
+FROM `LAND.SAP_ZPOSCST102`
 
 ${ when(incremental(), `WHERE recordstamp > (SELECT MAX(recordstamp) FROM ${self()})`) }
