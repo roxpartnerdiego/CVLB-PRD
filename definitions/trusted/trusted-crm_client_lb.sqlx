@@ -150,7 +150,4 @@ VALUES
 	S.created_by,
 	S.has_opted_in_of_whatsapp_bln_c,
 	S.has_opted_in_of_push_bln_c )
-WHEN NOT MATCHED BY SOURCE
-THEN
-DELETE
 ;

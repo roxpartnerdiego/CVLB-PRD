@@ -110,7 +110,4 @@ VALUES
 	S.sap_sync_status,
 	S.sap_sync_msg,
     S.created_by )
-WHEN NOT MATCHED BY SOURCE
-THEN
-DELETE
 ;

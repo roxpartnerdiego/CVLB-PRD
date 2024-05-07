@@ -98,7 +98,4 @@ VALUES
     S.modified_by,
     S.created_by,
     S.is_new )
-WHEN NOT MATCHED BY SOURCE
-THEN
-DELETE
 ;

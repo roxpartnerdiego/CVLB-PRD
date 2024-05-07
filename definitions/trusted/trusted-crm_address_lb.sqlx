@@ -122,7 +122,4 @@ VALUES
 	S.geo_coordinate,
 	S.receiver_name,
 	S.reference )
-WHEN NOT MATCHED BY SOURCE
-THEN
-DELETE
 ;
