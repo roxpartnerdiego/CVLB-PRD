@@ -10,7 +10,12 @@ USING
   WITH
     TABELA AS (
     SELECT
-      DISTINCT MANDT,
+      DISTINCT * EXCEPT (dense_rank,
+        PARTITIONTIME)
+    FROM (
+      SELECT
+        ROW_NUMBER() OVER (PARTITION BY MATNR, EAN11 ORDER BY PARTITIONTIME DESC) AS dense_rank,
+        MANDT,
         MATNR,
         MEINH,
         UMREZ,
@@ -38,21 +43,22 @@ USING
         NEST_FTR,
         MAX_STACK,
         CAPAUSE,
-        TY2TQ
-    FROM
-      `RAW.SAP_MARM` A
-    WHERE
-      PARTITIONTIME=(
+        TY2TQ,
+        PARTITIONTIME
+    FROM (
       SELECT
-        MAX(PARTITIONTIME)
+        DISTINCT A.*
       FROM
-        `RAW.SAP_MARM`))
-  SELECT
-    *
-  FROM
-    TABELA) S
+        `RAW.SAP_MARM` A ) )
+  WHERE
+    dense_rank = 1 )
+SELECT
+  *
+FROM
+  TABELA) S
 ON
   T.MATNR = S.MATNR
+  AND T.EAN11 = S.EAN11
   WHEN MATCHED THEN UPDATE SET 
   T.MANDT = S.MANDT,
   T.MATNR = S.MATNR,
