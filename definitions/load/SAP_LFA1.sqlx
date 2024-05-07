@@ -1,11 +1,9 @@
 config {
-   type: "operations",
-   tags: ["sap"],
-   hasOutput: true
+    type: "incremental",
+    schema: "RAW",
+    tags: ["sap"]
 }
 
-INSERT INTO 
-    `RAW.sap_lfa1` (
 SELECT 
     mandt,
     lifnr,
@@ -130,5 +128,7 @@ SELECT
     scheduling_type,
     submi_relevant,
     zzgtin,
-    CURRENT_TIMESTAMP() AS PARTITIONTIME
-FROM `LAND.SAP_LFA1`)
+    TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), MINUTE) AS PARTITIONTIME
+FROM `LAND.SAP_LFA1`
+
+${ when(incremental(), `WHERE TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), MINUTE) > (SELECT MAX(PARTITIONTIME) FROM ${self()})`) }

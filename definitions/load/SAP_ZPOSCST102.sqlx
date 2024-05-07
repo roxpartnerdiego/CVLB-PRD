@@ -1,11 +1,8 @@
 config {
-   type: "operations",
-   tags: ["sap"],
-   hasOutput: true
+    type: "incremental",
+    schema: "RAW",
+    tags: ["sap"]
 }
-
-INSERT INTO
-    RAW.SAP_ZPOSCST102 (
 SELECT 
     MANDT,
     WERKS,
@@ -51,5 +48,7 @@ SELECT
     QTDE_IMPOSTO02,
     IMEI,
     VLR_CASHBACK02,
-    CURRENT_TIMESTAMP() AS PARTITIONTIME
-FROM `LAND.SAP_ZPOSCST102`)
+    TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), MINUTE) AS PARTITIONTIME
+FROM `LAND.SAP_ZPOSCST102`
+
+${ when(incremental(), `WHERE TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), MINUTE) > (SELECT MAX(PARTITIONTIME) FROM ${self()})`) }

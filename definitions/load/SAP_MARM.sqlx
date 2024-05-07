@@ -1,11 +1,9 @@
 config {
-   type: "operations",
-   tags: ["sap"],
-   hasOutput: true
+    type: "incremental",
+    schema: "RAW",
+    tags: ["sap"]
 }
 
-INSERT INTO
-    `RAW.sap_marm` (
 SELECT 
     MANDT,
     MATNR,
@@ -36,5 +34,7 @@ SELECT
     MAX_STACK,
     CAPAUSE,
     TY2TQ,
-    CURRENT_TIMESTAMP() AS PARTITIONTIME
-FROM `LAND.SAP_MARM` )
+    TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), MINUTE) AS PARTITIONTIME
+FROM `LAND.SAP_MARM` 
+
+${ when(incremental(), `WHERE TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), MINUTE) > (SELECT MAX(PARTITIONTIME) FROM ${self()})`) }

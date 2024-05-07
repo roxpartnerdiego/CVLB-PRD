@@ -1,15 +1,15 @@
 config {
-   type: "operations",
-   tags: ["sap"],
-   hasOutput: true
+    type: "incremental",
+    schema: "RAW",
+    tags: ["sap"]
 }
 
-INSERT INTO 
-    `RAW.SAP_ZCVMM_CUSTO_ESTOQUE` (
 SELECT 
     MATNR,
     LGORT,
     LABST,
     VERPR,
-    CURRENT_TIMESTAMP() AS PARTITIONTIME
-FROM `LAND.SAP_ZCVMM_CUSTO_ESTOQUE`)
+    TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), MINUTE) AS PARTITIONTIME
+FROM `LAND.SAP_ZCVMM_CUSTO_ESTOQUE`
+
+${ when(incremental(), `WHERE TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), MINUTE) > (SELECT MAX(PARTITIONTIME) FROM ${self()})`) }
