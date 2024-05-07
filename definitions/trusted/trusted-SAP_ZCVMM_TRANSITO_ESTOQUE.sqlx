@@ -10,23 +10,29 @@ USING
   WITH
     TABELA AS (
     SELECT
-      DISTINCT MATNR,
-        WERKS,
-        MENGE
-    FROM
-        `RAW.SAP_ZCVMM_TRANSITO_ESTOQUE` A
-    WHERE
-      PARTITIONTIME=(
+      DISTINCT * EXCEPT (dense_rank,
+        PARTITIONTIME)
+    FROM (
       SELECT
-        MAX(PARTITIONTIME)
+        ROW_NUMBER() OVER (PARTITION BY MATNR, WERKS ORDER BY PARTITIONTIME DESC) AS dense_rank,
+        MATNR,
+        WERKS,
+        MENGE,
+        PARTITIONTIME
+    FROM (
+      SELECT
+        DISTINCT A.*
       FROM
-        `RAW.SAP_ZCVMM_TRANSITO_ESTOQUE`))
-  SELECT
-    *
-  FROM
-    TABELA) S
+        `RAW.SAP_ZCVMM_TRANSITO_ESTOQUE` A ) )
+  WHERE
+    dense_rank = 1 )
+SELECT
+  *
+FROM
+  TABELA) S
 ON
   T.MATNR = S.MATNR
+  AND T.WERKS = S.WERKS
   WHEN MATCHED THEN UPDATE SET 
   T.MATNR = S.MATNR,
   T.WERKS = S.WERKS,
@@ -40,4 +46,4 @@ INSERT
 VALUES
   ( S.MATNR,
     S.WERKS,
-    S.MENGE  );
+    S.MENGE );

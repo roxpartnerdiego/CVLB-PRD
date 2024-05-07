@@ -10,24 +10,30 @@ USING
   WITH
     TABELA AS (
     SELECT
-      DISTINCT MATNR,
+      DISTINCT * EXCEPT (dense_rank,
+        PARTITIONTIME)
+    FROM (
+      SELECT
+        ROW_NUMBER() OVER (PARTITION BY MATNR, LGORT ORDER BY PARTITIONTIME DESC) AS dense_rank,
+        MATNR,
         LGORT,
         LABST,
-        VERPR
-    FROM
-        `RAW.SAP_ZCVMM_CUSTO_ESTOQUE` A
-    WHERE
-      PARTITIONTIME=(
+        VERPR,
+        PARTITIONTIME
+    FROM (
       SELECT
-        MAX(PARTITIONTIME)
+        DISTINCT A.*
       FROM
-        `RAW.SAP_ZCVMM_CUSTO_ESTOQUE`))
-  SELECT
-    *
-  FROM
-    TABELA) S
+        `RAW.SAP_ZCVMM_CUSTO_ESTOQUE` A ) )
+  WHERE
+    dense_rank = 1 )
+SELECT
+  *
+FROM
+  TABELA) S
 ON
   T.MATNR = S.MATNR
+  AND T.LGORT = S.LGORT
   WHEN MATCHED THEN UPDATE SET 
   T.MATNR = S.MATNR,
   T.LGORT = S.LGORT,
