@@ -124,6 +124,6 @@ SELECT
     CODSUPERVON,
     TIPOAUTORIZ,
     _PARTITIONTIME AS PARTITIONTIME
-FROM `LAND.siac_intitenscupons`
+FROM `LAND.siac_intitenscupons_cev`
 
 ${ when(incremental(), `WHERE _PARTITIONTIME > (SELECT MAX(PARTITIONTIME) FROM ${self()})`) }

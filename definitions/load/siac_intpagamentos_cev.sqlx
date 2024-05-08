@@ -117,6 +117,6 @@ SELECT
     IDPARCEIROPAGE,
     IDTOKENPAGE,
     _PARTITIONTIME AS PARTITIONTIME
-FROM `LAND.siac_intpagamentos`
+FROM `LAND.siac_intpagamentos_cev`
 
 ${ when(incremental(), `WHERE _PARTITIONTIME > (SELECT MAX(PARTITIONTIME) FROM ${self()})`) }

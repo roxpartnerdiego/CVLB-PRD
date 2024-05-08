@@ -114,6 +114,6 @@ SELECT
     IDCADINTTRAN,
     CODCANALVENDAS,
     _PARTITIONTIME AS PARTITIONTIME
-FROM `LAND.siac_intcupons`
+FROM `LAND.siac_intcupons_cev`
 
 ${ when(incremental(), `WHERE _PARTITIONTIME > (SELECT MAX(PARTITIONTIME) FROM ${self()})`) }
