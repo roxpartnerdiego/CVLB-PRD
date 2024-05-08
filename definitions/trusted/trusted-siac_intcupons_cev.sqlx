@@ -1,5 +1,5 @@
 config {
-    dependencies: ["siac_intcupons"],
+    dependencies: ["siac_intcupons_cev"],
     tags: ["oracle", "siac"]
 }
 
@@ -10,7 +10,7 @@ CREATE TEMP FUNCTION AJUSTAR_NULO(coluna STRING) AS (
 );
 
 MERGE
-  `TRUSTED.siac_intcupons` T
+  `TRUSTED.siac_intcupons_cev` T
 USING
   (
   WITH
@@ -130,7 +130,7 @@ USING
       SELECT
         DISTINCT A.*
       FROM
-        `RAW.siac_intcupons` A ) )
+        `RAW.siac_intcupons_cev` A ) )
   WHERE
     dense_rank = 1 )
 SELECT

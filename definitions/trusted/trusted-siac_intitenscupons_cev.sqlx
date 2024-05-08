@@ -1,10 +1,10 @@
 config {
-    dependencies: ["siac_intitenscupons"],
+    dependencies: ["siac_intitenscupons_cev"],
     tags: ["oracle", "siac"]
 }
 
 MERGE
-  `TRUSTED.siac_intitenscupons` T
+  `TRUSTED.siac_intitenscupons_cev` T
 USING
   (
   WITH
@@ -134,7 +134,7 @@ USING
       SELECT
         DISTINCT A.*
       FROM
-        `RAW.siac_intitenscupons` A ) )
+        `RAW.siac_intitenscupons_cev` A ) )
   WHERE
     dense_rank = 1 )
 SELECT
