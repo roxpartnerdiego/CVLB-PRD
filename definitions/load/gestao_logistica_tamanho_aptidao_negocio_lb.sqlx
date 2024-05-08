@@ -1,8 +1,9 @@
 config {
     type: "incremental",
     schema: "RAW",
-    tags: ["sqlserver", "gestao_logistica"]
+    tags: ["sqlserver", "gestao_logistica_data2"]
 }
+
 SELECT 
   SYS_CHANGE_VERSION,	
   SYS_CHANGE_OPERATION,	
