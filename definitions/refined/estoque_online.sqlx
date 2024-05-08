@@ -1,4 +1,5 @@
 config {
+    dependencies: ["trusted-SAP_ZCVMM_CUSTO_ESTOQUE", "trusted-SAP_ZCVMM_TRANSITO_ESTOQUE", "trusted-estoque_estoque_sap_cev"],
     tags:["cubo-estoque"]
 }
 
