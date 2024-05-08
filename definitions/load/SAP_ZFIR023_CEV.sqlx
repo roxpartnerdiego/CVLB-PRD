@@ -1,10 +1,9 @@
 config {
-    type: "operations",
-    tags: ["sap"],
-    hasOutput: true
- }
+    type: "incremental",
+    schema: "RAW",
+    tags: ["sap"]
+}
 
-INSERT INTO `RAW.sap_zfir023_cev` (
 SELECT 
     __Material AS Material,
     Descricao_Material,
@@ -26,5 +25,7 @@ SELECT
     Total_Imposto,
     __Custo AS Custo,
     Comissao,
-    CURRENT_TIMESTAMP() AS PARTITIONTIME
-FROM `LAND.SAP_ZFIR023_CEV`);
+    TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), MINUTE) AS PARTITIONTIME
+FROM `LAND.SAP_ZFIR023_CEV`
+
+${ when(incremental(), `WHERE TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), MINUTE) > (SELECT MAX(PARTITIONTIME) FROM ${self()})`) }
