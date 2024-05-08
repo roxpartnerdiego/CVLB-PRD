@@ -1,50 +1,57 @@
 config {
-    dependencies: ["sap_zmmr028_cev"],
+    dependencies: ["SAP_ZMMR028_CEV"],
     tags: ["sap"]
 }
 
 MERGE
-  `TRUSTED.sap_zmmr028_cev` T
+  `TRUSTED.SAP_ZMMR028_CEV` T
 USING
   (
   WITH
     TABELA AS (
     SELECT
-      DISTINCT N_material,
-      Desc_material,
-      Grupo_Mercadorias,
-      Centro,
-      Data_Inicio,
-      Data_Fim,
-      Qtde_Itens_Material,
-      Total_Vendido,
-      Somatoria_Desconto,
-      Somatorio_Frete,
-      Somatorio_Acresscimo,
-      Somatorio_Despesas,
-      Somatorio_ICMS,
-      Somatorio_PIS,
-      Somatorio_COFINS,
-      Somatorio_IPI,
-      Somatorio_ISS,
-      Total_Impostos,
-      Somatorio_CMM,
-      Somatorio_Comissao
-    FROM
-      `RAW.sap_zmmr028_cev` A
-    WHERE
-      PARTITIONTIME=(
+      DISTINCT * EXCEPT (dense_rank,
+        PARTITIONTIME)
+    FROM (
       SELECT
-        MAX(PARTITIONTIME)
+        ROW_NUMBER() OVER (PARTITION BY N_material, Centro ORDER BY PARTITIONTIME DESC) AS dense_rank,
+        N_material,
+        Desc_material,
+        Grupo_Mercadorias,
+        Centro,
+        Data_Inicio,
+        Data_Fim,
+        Qtde_Itens_Material,
+        Total_Vendido,
+        Somatoria_Desconto,
+        Somatorio_Frete,
+        Somatorio_Acresscimo,
+        Somatorio_Despesas,
+        Somatorio_ICMS,
+        Somatorio_PIS,
+        Somatorio_COFINS,
+        Somatorio_IPI,
+        Somatorio_ISS,
+        Total_Impostos,
+        Somatorio_CMM,
+        Somatorio_Comissao,
+        PARTITIONTIME
+    FROM (
+      SELECT
+        DISTINCT A.*
       FROM
-        `RAW.sap_zmmr028_cev`))
-  SELECT
-    *
-  FROM
-    TABELA) S
+        `RAW.SAP_ZMMR028_CEV` A ) )
+  WHERE
+    dense_rank = 1 )
+SELECT
+  *
+FROM
+  TABELA) S
 ON
   T.N_material = S.N_material
+  AND T.Centro = S.Centro
   WHEN MATCHED THEN UPDATE SET 
+  T.N_material = S.N_material,
   T.Desc_material = S.Desc_material,
   T.Grupo_Mercadorias = S.Grupo_Mercadorias,
   T.Centro = S.Centro,

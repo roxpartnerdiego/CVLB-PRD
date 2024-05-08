@@ -1,50 +1,57 @@
 config {
-    dependencies: ["sap_zfir023_cev"],
+    dependencies: ["SAP_ZFIR023_CEV"],
     tags: ["sap"]
 }
 
 MERGE
-  `TRUSTED.sap_zfir023_cev` T
+  `TRUSTED.SAP_ZFIR023_CEV` T
 USING
   (
   WITH
     TABELA AS (
     SELECT
-      DISTINCT Material,
-      Descricao_Material,
-      GrpMercadoria,
-      Loja,
-      Data,
-      Data_Fim,
-      Quantidade,
-      Valor,
-      Desconto,
-      Frete,
-      Acrescimo,
-      Despesas,
-      ICMS,
-      PIS,
-      COFINS,
-      IPI,
-      ISS,
-      Total_Imposto,
-      Custo,
-      Comissao
-    FROM
-      `RAW.sap_zfir023_cev` A
-    WHERE
-      PARTITIONTIME=(
+      DISTINCT * EXCEPT (dense_rank,
+        PARTITIONTIME)
+    FROM (
       SELECT
-        MAX(PARTITIONTIME)
+        ROW_NUMBER() OVER (PARTITION BY Material, Descricao_Material ORDER BY PARTITIONTIME DESC) AS dense_rank,
+        Material,
+        Descricao_Material,
+        GrpMercadoria,
+        Loja,
+        Data,
+        Data_Fim,
+        Quantidade,
+        Valor,
+        Desconto,
+        Frete,
+        Acrescimo,
+        Despesas,
+        ICMS,
+        PIS,
+        COFINS,
+        IPI,
+        ISS,
+        Total_Imposto,
+        Custo,
+        Comissao,
+        PARTITIONTIME
+    FROM (
+      SELECT
+        DISTINCT A.*
       FROM
-        `RAW.sap_zfir023_cev`))
-  SELECT
-    *
-  FROM
-    TABELA) S
+        `RAW.SAP_ZFIR023_CEV` A ) )
+  WHERE
+    dense_rank = 1 )
+SELECT
+  *
+FROM
+  TABELA) S
 ON
   T.Material = S.Material
+  AND T.Descricao_Material = S.Descricao_Material
   WHEN MATCHED THEN UPDATE SET 
+  T.Material = S.Material,
   T.Descricao_Material = S.Descricao_Material,
   T.GrpMercadoria = S.GrpMercadoria,
   T.Loja = S.Loja,
