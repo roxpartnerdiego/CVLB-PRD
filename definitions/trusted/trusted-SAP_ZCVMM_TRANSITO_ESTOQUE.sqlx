@@ -1,6 +1,6 @@
 config {
     dependencies: ["SAP_ZCVMM_TRANSITO_ESTOQUE"],
-    tags: ["sap"]
+    tags: ["sap", "cubo-estoque"]
 }
 
 MERGE
