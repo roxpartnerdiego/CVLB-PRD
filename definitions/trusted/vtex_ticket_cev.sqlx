@@ -13,7 +13,7 @@ WITH
     DISTINCT *
   FROM (
     SELECT
-      CAST(customer_id AS INT64) AS customer_id,
+      CAST(customer_id AS STRING) AS customer_id,
       CAST(seller_order_id AS STRING) AS seller_order_id,
       CAST(order_id AS STRING) AS order_id,
       CAST(order_group AS STRING) AS order_group,
@@ -58,14 +58,14 @@ WITH
       CAST(hostname AS STRING) AS hostname,
       CAST(marketing_tags AS STRING) AS marketing_tags,
       CAST(flg_lemais AS STRING) AS flg_lemais,
-      CAST(sequence AS INT64) AS sequence,
+      CAST(sequence AS STRING) AS sequence,
       CAST(coupon AS STRING) AS coupon,
       CAST(delivery_company AS STRING) AS delivery_company,
       CAST(delivery_estimate_date AS DATE) AS delivery_estimate_date,
       CAST(delivery_estimate_time AS STRING) AS delivery_estimate_time,
       CAST(tracking_number AS STRING) AS tracking_number,
       CAST(is_completed AS STRING) AS is_completed,
-      CAST(invoice_number AS INT64) AS invoice_number,
+      CAST(invoice_number AS STRING) AS invoice_number,
       CAST(delivery_channel AS STRING) AS delivery_channel,
       dense_rank
     FROM (
