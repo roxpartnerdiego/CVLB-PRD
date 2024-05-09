@@ -8,7 +8,7 @@ INSERT INTO
     `REFINED.SAP_RETAIL_TICKET` (
 SELECT
     customer_id AS DOC_CLIENTE,
-    ticket_id AS CUPOM_DE_VENDA,
+    CAST(ticket_id AS STRING) AS CUPOM_DE_VENDA,
     store_id AS FILIAL,
     pos_id AS NUM_PDV,
     employee_id AS OPERADOR,
@@ -44,5 +44,5 @@ SELECT
     CODIDENTPDVMOBILE AS TIPO_PDV,
     CURRENT_TIMESTAMP() AS DATA_ATUALIZACAO,
     "CEV" AS BANDEIRA
-FROM `TRUSTED.siac_intcupons`
+FROM `TRUSTED.siac_intcupons_cev`
     );
