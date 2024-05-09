@@ -1,0 +1,44 @@
+config {
+   type: "operations",
+   tags: ["sap"],
+   hasOutput: true
+}
+
+INSERT INTO `RAW.SAP_ZLBMM001` (
+SELECT 
+    Material,		
+    `Denominação` AS Denominacao,		
+    GR_Mer,		
+    Subcat,		
+    Segmento,		
+    SubSegm,		
+    `Sub-Sub` AS Sub_Sub,
+    Grprod,		
+    Origem,		
+    Cod_Forn,		
+    Fornecedor,		
+    Segm_LB,		
+    Indi_LB,		
+    MOD_LB,		
+    Sens_LB,		
+    Comparab,		
+    UF,		
+    NCM,		
+    UMP,		
+    Qtd_Ped,		
+    R_S,		
+    Qtd_Rem,		
+    Arred,		
+    Bloq_LB,		
+    MatForn,		
+    DescVenda,		
+    Nv_Sort,		
+    Exclusvo,		
+    Volt,		
+    Marca,		
+    EAN_UND,		
+    Consig,		
+    NMaterial,		
+    M_Prop,
+    TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), MINUTE) AS PARTITIONTIME
+FROM `LAND.SAP_ZLBMM001`);
