@@ -1,4 +1,5 @@
 config {
+  dependencies: ["trusted-lojas_descontos_motivo_pdv_cev", "trusted-SAP_ZPOSCST102"],
   tags: ["cubo-vendas", "desconto"]
 }
 
