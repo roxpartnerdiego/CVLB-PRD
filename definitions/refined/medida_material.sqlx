@@ -3,7 +3,7 @@ TRUNCATE TABLE REFINED.MEDIDA_MATERIAL;
 INSERT INTO 
     REFINED.MEDIDA_MATERIAL (
 SELECT
-    LTRIM(M.matnr, '0') AS COD_SKU,
+    CAST(LTRIM(M.matnr, '0') AS INT64) AS COD_MATERIAL,
     Z.Cod_Forn AS COD_FORNEC,
     L.stcd1 AS CNPJ,
     Z.Fornecedor AS FORNECEDOR,
@@ -25,8 +25,8 @@ SELECT
     M.meinh AS UMA,
     CURRENT_TIMESTAMP() AS DATA_ATUALIZACAO,
     "LB" AS BANDEIRA
-FROM `cvlb-development.TRUSTED.sap_marm` M
-LEFT JOIN `cvlb-development.TRUSTED.sap_zlbmm001` Z
+FROM `TRUSTED.SAP_MARM` M
+LEFT JOIN `TRUSTED.SAP_ZLBMM001` Z
 ON LTRIM(M.matnr, '0') = Z.Material
-LEFT JOIN `cvlb-development.TRUSTED.sap_lfa1` L
-ON Z.Cod_Forn = L.lifnr)
+LEFT JOIN `TRUSTED.SAP_LFA1` L
+ON Z.Cod_Forn = L.lifnr  )
