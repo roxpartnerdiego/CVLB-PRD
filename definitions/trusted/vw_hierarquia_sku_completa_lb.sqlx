@@ -1,0 +1,121 @@
+config {
+    tags: ["produto_lb"]
+}
+
+CREATE OR REPLACE VIEW TRUSTED.HIERARQUIA_SKU_LB AS (
+SELECT
+A.*,
+CASE
+    WHEN A.FLAG_MARCA_PROPRIA = 'SIM' AND A.ORIGEM = 'IMPORTADO' THEN 'MP IMPORTADO'
+    WHEN A.FLAG_MARCA_PROPRIA = 'SIM' AND A.ORIGEM = 'NACIONAL'  THEN 'MP NACIONAL'
+ELSE A.ORIGEM
+END AS ORIGEM_MARCA_PROPRIA,
+CASE WHEN
+    (CASE
+        WHEN A.FLAG_MARCA_PROPRIA = 'SIM' THEN 1
+        WHEN A.ORIGEM = 'IMPORTADO' THEN 1
+        ELSE 0 
+    END) = 1 
+THEN 'SIM' 
+ELSE 'NÃO'
+END AS FLAG_IMPORTADO_E_MARCA_PROPRIA
+FROM 
+(
+SELECT
+    DISTINCT M.Material AS COD_MATERIAL,
+    NULL AS COD_SKU,
+    M.Denominacao AS NOM_SKU,
+    D.COD_CLASSE AS COD_CLASSE_ATUAL,
+    
+    -- MUNDO
+    CONCAT(SUBSTR(M.GR_Mer, 1, 1), SUBSTR(M.Segmento, 1, 1)) AS COD_DEPARTAMENTO,
+    M.Subcat AS NOM_DEPARTAMENTO,
+    CONCAT(SUBSTR(M.GR_Mer, 1, 1), SUBSTR(M.Segmento, 1, 1), ' - ',M.Subcat) AS NOM_DEPARTAMENTO_COMPLETO,
+
+    -- CATEGORIA
+    M.Segmento AS NOM_CATEGORIA, 
+    CONCAT(SUBSTR(M.GR_Mer, 1, 1), SUBSTR(M.Segmento, 1, 1),' - ',M.Segmento) AS NOM_CATEGORIA_COMPLETO,
+    
+    -- NEGOCIO
+    M.SubSegm AS NOM_NEGOCIO,
+    CONCAT(SUBSTR(M.GR_Mer, 1, 1), SUBSTR(M.Segmento, 1, 1), ' - ', M.SubSegm) AS NOM_NEGOCIO_COMPLETO,
+
+    -- NIVEL4
+    M.Sub_Sub AS NOM_NIVEL4,
+    CONCAT(SUBSTR(M.GR_Mer, 1, 1), SUBSTR(M.Segmento, 1, 1), ' - ', M.Sub_Sub) AS NOM_NIVEL4_COMPLETO,
+    'NÃO INFORMADO' AS COD_GM,
+    C.NOM_GM,
+    'NÃO INFORMADO' AS COD_GC,
+    C.NOM_GC,
+    LTRIM(RTRIM(M.Cod_Forn)) AS COD_FORN,
+    M.Fornecedor AS NOM_FORNECEDOR,
+    CONCAT(M.Fornecedor,' - ',L.stcd1) AS NOM_FORNECEDOR_COMPLETO,
+    GF.NOM_GRUPO,
+    M.Grprod AS NOM_GRUPO_COMPLETO,
+    NULL AS COD_EAN,
+    M.Bloq_LB AS BLOQ_LB,
+    RTRIM(LTRIM(M.Qtd_Rem)) AS QTD_CAIXA_INTERNA,
+    RTRIM(LTRIM(M.Arred)) AS ARREDONDAMENTO_CAIXA_MAE,
+    M.R_S AS RS_UNID,
+    M.NCM,
+    M.UMP,
+    LTRIM(M.Qtd_Ped) AS QTD_PED,
+    M.Segm_LB AS SEGM_LB_CLASSE,
+    CASE
+        WHEN LTRIM(RTRIM(M.Cod_Forn)) = '250001690'
+        THEN 'IMPORTADO'
+        ELSE LTRIM(RTRIM(M.Origem))
+    END AS ORIGEM,
+    CASE LTRIM(RTRIM(MA.BWSCL))  -- verificar essa linha Na MARA so tem A e 1
+        WHEN 'SIM' THEN '1' 
+        ELSE 'N' 
+    END AS CONSIGNADO,
+    CASE
+        WHEN M.Denominacao  LIKE '%OGZA%' THEN 'OGZA' 
+        WHEN M.Denominacao  LIKE '%ANJI%' THEN 'ANJI' 
+        WHEN M.Denominacao  LIKE '%BOLDER%' THEN 'BOLDER'
+        WHEN M.Denominacao  LIKE '%CChef%' THEN 'CChef'
+        WHEN M.Denominacao  LIKE '%PLAY&FUN%' THEN 'PLAY&FUN'
+        WHEN M.Denominacao  LIKE '%ArteeCazza%' THEN NULL
+        WHEN M.Denominacao  LIKE '%ArteeCazza%' THEN NULL
+        WHEN M.Denominacao  LIKE '%Art Cazza%' THEN NULL
+        WHEN M.Denominacao  LIKE '%Arte Cazza%' THEN NULL
+        WHEN M.Denominacao  LIKE '%CAZZA%' THEN 'Cazza' 
+        WHEN M.Denominacao  LIKE '%cliker%' THEN 'Cliker'
+        WHEN M.Denominacao  LIKE '%tuttes%' THEN 'Tuttes'
+        WHEN M.MARCA = 'Le' 
+    THEN M.MARCA
+    ELSE M.MARCA
+    END AS MARCA, 
+    CASE
+        WHEN M.MARCA in ('Le','CAZZA','OGZA','PLAY&FUN','CChef') THEN 'SIM'
+        WHEN M.Denominacao LIKE '%OGZA%' THEN 'SIM' 
+        WHEN M.Denominacao LIKE '%ANJI%' THEN 'SIM' 
+        WHEN M.Denominacao LIKE '%BOLDER%' THEN 'SIM'
+        WHEN M.Denominacao LIKE '%CChef%' THEN 'SIM'
+        WHEN M.Denominacao LIKE '%PLAY&FUN%' THEN 'SIM'
+        WHEN M.Denominacao LIKE '%ArteeCazza%' THEN 'NAO'
+        WHEN M.Denominacao LIKE '%ArteeCazza%' THEN 'NAO'
+        WHEN M.Denominacao LIKE '%Art Cazza%' THEN 'NAO'
+        WHEN M.Denominacao LIKE '%Arte Cazza%' THEN 'NAO'
+        WHEN M.Denominacao LIKE '%CAZZA%' THEN 'SIM'
+        WHEN M.Denominacao LIKE '%cliker%' THEN 'SIM'
+        WHEN M.Denominacao LIKE '%tuttes%' THEN 'SIM'
+        WHEN M.MARCA LIKE '%Tuttes%' THEN 'SIM'
+    ELSE 'NAO'
+    END AS FLAG_MARCA_PROPRIA
+
+
+FROM `TRUSTED.SAP_ZLBMM001` M
+LEFT JOIN `TRUSTED.SAP_MARA` MA 
+ON M.Material = LTRIM(MA.matnr, '0')
+LEFT JOIN `TRUSTED.plancom_depara_organograma_lb` C 
+ON CONCAT(SUBSTR(M.GR_Mer, 1, 1), SUBSTR(M.Segmento, 1, 1)) = SUBSTR(C.NOM_CATEGORIA_COMPLETO, 1, 2) 
+LEFT JOIN `TRUSTED.plancom_classe_atual_lb` D 
+ON M.Material = D.COD_SKU 
+LEFT JOIN `TRUSTED.plancom_fornecedor_cvlb` GF 
+ON LTRIM(RTRIM(M.Cod_Forn)) = CAST(GF.COD_FORN_SAP AS STRING)
+LEFT JOIN `TRUSTED.SAP_LFA1` L 
+ON M.Cod_Forn = L.lifnr
+) A
+)
