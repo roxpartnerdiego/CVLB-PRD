@@ -1,6 +1,6 @@
 config {
    type: "operations",
-   tags: ["vtex_archives_lb"],
+   tags: ["vtex_archives_lb", "vtex"],
    dependencies: ["procedure_land_to_raw"],
    hasOutput: true
 }
