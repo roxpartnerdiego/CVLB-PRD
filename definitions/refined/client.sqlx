@@ -1,5 +1,6 @@
 config {
-  tags: ["cubo-clientes"]
+  dependencies: ["trusted-crm_client_cev", "trusted-crm_client_lb"],
+  tags: ["cubo-clientes", "crm"]
 }
 
 CREATE TEMP FUNCTION AJUSTAR_DATA(coluna STRING) AS (
