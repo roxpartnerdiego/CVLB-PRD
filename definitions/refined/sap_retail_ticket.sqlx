@@ -9,7 +9,7 @@ INSERT INTO
 SELECT
     customer_id AS DOC_CLIENTE,
     ticket_id AS CUPOM_DE_VENDA,
-    store_id AS FILIAL,
+    store_id AS COD_FILIAL,
     pos_id AS NUM_PDV,
     employee_id AS OPERADOR,
     amount AS VALOR_PAGO,
