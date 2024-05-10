@@ -1,7 +1,7 @@
 config {
     type: "incremental",
     schema: "RAW",
-    tags: ["sap"]
+    tags: ["sap", "venda_dia_sap"]
 }
 
 SELECT 

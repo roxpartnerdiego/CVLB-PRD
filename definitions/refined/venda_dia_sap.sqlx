@@ -1,5 +1,5 @@
 config {
-    tags: ["cubo-vendas"]
+    tags: ["cubo-vendas", "venda_dia_sap"]
 }
 
 TRUNCATE TABLE REFINED.VENDA_DIA_SAP;
