@@ -13,7 +13,7 @@ WITH
   FROM (
     SELECT
       CAST(customer_id AS STRING) AS customer_id,
-      CAST(ticket_id AS FLOAT64 ) AS ticket_id,
+      CAST(ticket_id AS STRING) AS ticket_id,
       CAST(product_id AS INT64 ) AS product_id,
       CAST(item_id AS INT64 ) AS item_id,
       CAST(store_id AS INT64 ) AS store_id,
