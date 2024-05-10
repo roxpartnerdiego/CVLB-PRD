@@ -1,3 +1,7 @@
+config {
+    tags: ['medida_material']
+}
+
 TRUNCATE TABLE REFINED.MEDIDA_MATERIAL;
 
 INSERT INTO 
