@@ -1,7 +1,7 @@
 config {
     type: "incremental",
     schema: "RAW",
-    tags: ["sqlserver", "plancom_data2"]
+    tags: ["sqlserver", "plancom_data2", "cubo-produto"]
 }
 SELECT 
     SYS_CHANGE_VERSION,	

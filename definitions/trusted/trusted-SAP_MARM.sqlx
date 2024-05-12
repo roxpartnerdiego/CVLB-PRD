@@ -1,6 +1,6 @@
 config {
-    dependencies: ["SAP_MARM", "medida_material"],
-    tags: ["sap"]
+    dependencies: ["SAP_MARM"],
+    tags: ["sap", "medida_material"]
 }
 
 MERGE
