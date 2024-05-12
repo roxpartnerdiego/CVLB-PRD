@@ -1,6 +1,6 @@
 config {
     dependencies: ["gestao_logistica_tamanho_aptidao_negocio_lb"],
-    tags: ["sqlserver", "gestao_logistica_data2"]
+    tags: ["sqlserver", "gestao_logistica_data2", "cubo-filiais"]
 }
 
 MERGE

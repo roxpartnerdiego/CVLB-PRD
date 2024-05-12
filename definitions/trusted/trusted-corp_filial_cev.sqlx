@@ -1,5 +1,5 @@
 config { dependencies: ["corp_filial_cev"], 
-tags: ["sqlserver", "corp"]
+tags: ["sqlserver", "corp", "cubo-filiais"]
 }
 MERGE
 `TRUSTED.corp_filial_cev` T

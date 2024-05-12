@@ -1,7 +1,7 @@
 config {
     type: "incremental",
     schema: "RAW",
-    tags: ["sqlserver", "gestao_logistica_data2"]
+    tags: ["sqlserver", "gestao_logistica_data2", "cubo-filiais"]
 }
 
 SELECT 

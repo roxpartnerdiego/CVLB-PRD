@@ -1,6 +1,6 @@
 config {
     dependencies: ["distribuicao_filial_lb"],
-    tags: ["sqlserver", "distribuicao"]
+    tags: ["sqlserver", "distribuicao", "cubo-filiais"]
 }
 
 MERGE

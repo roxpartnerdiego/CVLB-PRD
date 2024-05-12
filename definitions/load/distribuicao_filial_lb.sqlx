@@ -1,7 +1,7 @@
 config {
     type: "incremental",
     schema: "RAW",
-    tags: ["sqlserver", "distribuicao"]
+    tags: ["sqlserver", "distribuicao", "cubo-filiais"]
 }
 SELECT 
     SYS_CHANGE_VERSION,	
@@ -20,7 +20,7 @@ SELECT
     BLOQUEIO_LOJA,
     VOLTAGEM,
     VOLTAGEM_PRINCIPAL,
-    DAT_ATUALIZACAOL,
+    DAT_ATUALIZACAO,
     _PARTITIONTIME AS PARTITIONTIME
 FROM `LAND.distribuicao_filial_lb`
 
