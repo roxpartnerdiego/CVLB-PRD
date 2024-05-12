@@ -1,6 +1,6 @@
 config {
    type: "operations",
-   tags: ["sap_archives_lb"],
+   tags: ["sap_archives_lb", "retail"],
    dependencies: ["procedure_land_to_raw"],
    hasOutput: true
 }
