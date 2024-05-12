@@ -1,4 +1,5 @@
 config {
+  dependencies: ["trusted-gestao_logistica_tamanho_aptidao_negocio_lb", "trusted-plancom_filial_lb", , "trusted-plancom_status_filial_lb", "trusted-distribuicao_filial_lb", "trusted-gestao_logistica_filial_corona_cev", "trusted-gestao_logistica_regiao_filial_cev", "trusted-corp_filial_cev"],
   tags: ["cubo-filiais"]
 }
 TRUNCATE TABLE REFINED.FILIAL;
