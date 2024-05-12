@@ -1,4 +1,5 @@
 config {
+    dependencies: ["trusted-SAP_MARM", "trusted-SAP_ZLBMM001", "trusted-SAP_LFA1"],
     tags: ['medida_material']
 }
 
