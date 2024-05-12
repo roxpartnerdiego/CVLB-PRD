@@ -1,5 +1,5 @@
 config {
-    dependencies: ["SAP_MARM"],
+    dependencies: ["SAP_MARM", "medida_material"],
     tags: ["sap"]
 }
 

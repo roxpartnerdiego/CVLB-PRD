@@ -1,6 +1,6 @@
 config {
    type: "operations",
-   tags: ["sap"],
+   tags: ["sap", "medida_material"],
    hasOutput: true
 }
 

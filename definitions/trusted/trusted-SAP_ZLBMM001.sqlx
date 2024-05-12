@@ -1,6 +1,6 @@
 config {
     dependencies: ["SAP_ZLBMM001"],
-    tags: ["sap"]
+    tags: ["sap", "medida_material"]
 }
 
 MERGE

@@ -1,6 +1,6 @@
 config {
     dependencies: ["SAP_LFA1"],
-    tags: ["sap"]
+    tags: ["sap", "medida_material"]
 }
 
 MERGE
