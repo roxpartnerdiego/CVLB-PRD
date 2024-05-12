@@ -1,6 +1,6 @@
 config {
     dependencies: ["plancom_status_filial_lb"],
-    tags: ["sqlserver", "plancom"]
+    tags: ["sqlserver", "plancom", "cubo-filiais"]
 }
 
 MERGE
