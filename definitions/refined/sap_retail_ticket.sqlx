@@ -17,9 +17,11 @@ INSERT INTO
     date AS DIA_VENDA,
     date AS HORA_VENDA,
     discount_amount AS DESCONTO,
-    -- gross_profit_amount AS VALOR_BRUTO,
     items_quantity AS QUANTIDADE_TOTAL_DE_ITENS,
-    status AS STATUS,
+    CASE WHEN status = 0 THEN 1
+    WHEN status = 1 THEN 2
+    ELSE NULL
+    END AS STATUS,
     gross_profit_amount AS VALOR_TOTAL_BRUTO,
     ident_pdv AS TIPO_PDV,
     CURRENT_TIMESTAMP() AS DATA_ATUALIZACAO,
