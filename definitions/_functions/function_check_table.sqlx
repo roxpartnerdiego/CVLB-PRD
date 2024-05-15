@@ -3,12 +3,22 @@ config {
    hasOutput: true
 }
 
+-- CREATE OR REPLACE FUNCTION
+--   FUNCTIONS.FncCheckTable(TableName STRING)
+--   RETURNS STRING AS ( (
+--     SELECT
+--       CAST(row_count AS STRING) AS RESULT
+--     FROM
+--       RAW.__TABLES__
+--     WHERE
+--       table_id=TableName ) );
+
 CREATE OR REPLACE FUNCTION
-  FUNCTIONS.FncCheckTable(TableName STRING)
+  FUNCTIONS.FncCheckTable (TableName STRING)
   RETURNS STRING AS ( (
     SELECT
-      CAST(row_count AS STRING) AS RESULT
+      CAST(CASE WHEN count(1) = 0 THEN 0 ELSE SUM(row_count) END  AS STRING) AS RESULT
     FROM
       RAW.__TABLES__
     WHERE
-      table_id=TableName ) );
+      table_id=TableName ) )
