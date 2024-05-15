@@ -7,4 +7,4 @@ config {
 
 
 
-CALL `PROCEDURES.LOAD_LAND_TO_RAW`('vtex_ticket_lb', 'FULL');
+CALL `PROCEDURES.LOAD_LAND_TO_RAW`('vtex_ticket_lb');

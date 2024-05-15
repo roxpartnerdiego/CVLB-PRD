@@ -6,4 +6,4 @@ config {
 }
 
 
-CALL `PROCEDURES.LOAD_LAND_TO_RAW`('sap_retail_payment_detail_lb', 'FULL');
+CALL `PROCEDURES.LOAD_LAND_TO_RAW`('sap_retail_payment_detail_lb');
