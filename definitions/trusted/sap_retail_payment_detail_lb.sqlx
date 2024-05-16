@@ -18,7 +18,7 @@ WITH
       CAST(amount AS FLOAT64 ) AS amount,
       CAST(payment_method AS STRING ) AS payment_method,
       CAST(payment_terms AS STRING ) AS payment_terms,
-      CAST(iin_issuer_ident_number AS INT64 ) AS iin_issuer_ident_number,
+      SAFE_CAST(iin_issuer_ident_number AS INT64 ) AS iin_issuer_ident_number,
       CAST(type_of_operation AS STRING ) AS type_of_operation,
       CAST(number_of_installments AS INT64 ) AS number_of_installments,
       CAST(type_of_financing AS STRING ) AS type_of_financing,
