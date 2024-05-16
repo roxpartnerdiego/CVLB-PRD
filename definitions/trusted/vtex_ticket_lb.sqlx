@@ -65,7 +65,7 @@ WITH
       CAST(delivery_estimate_time AS STRING) AS delivery_estimate_time,
       CAST(tracking_number AS STRING) AS tracking_number,
       CAST(is_completed AS STRING) AS is_completed,
-      CAST(invoice_number AS INT64) AS invoice_number,
+      CAST(invoice_number AS STRING) AS invoice_number,
       CAST(delivery_channel AS STRING) AS delivery_channel,
       dense_rank
     FROM (
