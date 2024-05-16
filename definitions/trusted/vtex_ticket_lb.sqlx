@@ -13,7 +13,7 @@ WITH
     DISTINCT *
   FROM (
     SELECT
-      CAST(customer_id AS INT64) AS customer_id,
+      CAST(customer_id AS STRING) AS customer_id,
       CAST(seller_order_id AS STRING) AS seller_order_id,
       CAST(order_id AS STRING) AS order_id,
       CAST(order_group AS STRING) AS order_group,
