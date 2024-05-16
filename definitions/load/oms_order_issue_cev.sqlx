@@ -1,7 +1,7 @@
 config {
     type: "incremental",
     schema: "RAW",
-    tags: ["postgresql", "oms", "oms-incr"]
+    tags: ["postgresql", "oms", "order_issue"]
 }
 SELECT 
     SYS_CHANGE_VERSION,	

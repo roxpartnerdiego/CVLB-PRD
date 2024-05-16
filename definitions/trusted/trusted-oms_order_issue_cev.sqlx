@@ -1,6 +1,6 @@
 config {
 	dependencies: ["oms_order_issue_cev"],
-	tags: ["postgresql", "oms", "oms-incr"]
+	tags: ["postgresql", "oms", "order_issue"]
 }
 
 MERGE
