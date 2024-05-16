@@ -1,5 +1,6 @@
 config {
-  tags: ["cubo-vendas", "vtex"]
+    dependencies:["vtex_item_lb", "vtex_item_cev"],
+    tags: ["cubo-vendas", "vtex"]
 }
 
 TRUNCATE TABLE REFINED.VTEX_ITEM;
