@@ -58,7 +58,7 @@ WITH
       CAST(hostname AS STRING) AS hostname,
       CAST(marketing_tags AS STRING) AS marketing_tags,
       CAST(flg_lemais AS STRING) AS flg_lemais,
-      CAST(sequence AS STRING) AS sequence,
+      CAST(sequence AS INT64) AS sequence,
       CAST(coupon AS STRING) AS coupon,
       CAST(delivery_company AS STRING) AS delivery_company,
       CAST(delivery_estimate_date AS DATE) AS delivery_estimate_date,
