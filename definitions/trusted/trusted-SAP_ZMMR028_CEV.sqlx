@@ -3,6 +3,16 @@ config {
     tags: ["sap", "venda_dia_sap"]
 }
 
+CREATE TEMP FUNCTION AJUSTAR_DECIMAL(coluna STRING) AS (
+  REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(coluna, r'\.', ''), r'\,', '.'), r'^$', '0.0')
+);
+
+CREATE TEMP FUNCTION AJUSTAR_DATA(coluna STRING) AS (
+  CASE WHEN coluna <> '' AND NOT(REGEXP_CONTAINS(coluna, r'[A-Za-z]+')) THEN REGEXP_REPLACE(REGEXP_REPLACE(coluna, r'\.', '-'), r'(\d{2})-(\d{2})-(\d{4})', r'\3-\2-\1')
+  ELSE NULL
+  END
+);
+
 MERGE
   `TRUSTED.SAP_ZMMR028_CEV` T
 USING
@@ -15,26 +25,26 @@ USING
     FROM (
       SELECT
         ROW_NUMBER() OVER (PARTITION BY N_material, Centro ORDER BY PARTITIONTIME DESC) AS dense_rank,
-        N_material,
-        Desc_material,
-        Grupo_Mercadorias,
-        Centro,
-        Data_Inicio,
-        Data_Fim,
-        Qtde_Itens_Material,
-        Total_Vendido,
-        Somatoria_Desconto,
-        Somatorio_Frete,
-        Somatorio_Acresscimo,
-        Somatorio_Despesas,
-        Somatorio_ICMS,
-        Somatorio_PIS,
-        Somatorio_COFINS,
-        Somatorio_IPI,
-        Somatorio_ISS,
-        Total_Impostos,
-        Somatorio_CMM,
-        Somatorio_Comissao,
+        CAST(N_material AS INT64) N_material,
+        LTRIM(Desc_material) AS Desc_material,
+        LTRIM(Grupo_Mercadorias) AS Grupo_Mercadorias,
+        CAST(Centro AS INT64) AS Centro,
+        CAST(AJUSTAR_DATA(Data_Inicio) AS DATE) AS Data_Inicio,
+        CAST(AJUSTAR_DATA(Data_Fim) AS DATE) AS Data_Fim,
+        CAST(AJUSTAR_DECIMAL(Qtde_Itens_Material) AS NUMERIC) AS Qtde_Itens_Material,
+        CAST(AJUSTAR_DECIMAL(Total_Vendido) AS NUMERIC) AS Total_Vendido,
+        CAST(AJUSTAR_DECIMAL(Somatoria_Desconto) AS NUMERIC) AS Somatoria_Desconto,
+        CAST(AJUSTAR_DECIMAL(Somatorio_Frete) AS NUMERIC) AS Somatorio_Frete,
+        CAST(AJUSTAR_DECIMAL(Somatorio_Acresscimo) AS NUMERIC) AS Somatorio_Acresscimo,
+        CAST(AJUSTAR_DECIMAL(Somatorio_Despesas) AS NUMERIC) AS Somatorio_Despesas,
+        CAST(AJUSTAR_DECIMAL(Somatorio_ICMS) AS NUMERIC) AS Somatorio_ICMS,
+        CAST(AJUSTAR_DECIMAL(Somatorio_PIS) AS NUMERIC) AS Somatorio_PIS,
+        CAST(AJUSTAR_DECIMAL(Somatorio_COFINS) AS NUMERIC) AS Somatorio_COFINS,
+        CAST(AJUSTAR_DECIMAL(Somatorio_IPI) AS NUMERIC) AS Somatorio_IPI,
+        CAST(AJUSTAR_DECIMAL(Somatorio_ISS) AS NUMERIC) AS Somatorio_ISS,
+        CAST(AJUSTAR_DECIMAL(Total_Impostos) AS NUMERIC) AS Total_Impostos,
+        CAST(AJUSTAR_DECIMAL(Somatorio_CMM) AS NUMERIC) AS Somatorio_CMM,
+        CAST(AJUSTAR_DECIMAL(Somatorio_Comissao) AS NUMERIC) AS Somatorio_Comissao,
         PARTITIONTIME
     FROM (
       SELECT
