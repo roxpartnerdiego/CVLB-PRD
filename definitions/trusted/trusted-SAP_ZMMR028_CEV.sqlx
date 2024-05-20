@@ -4,7 +4,14 @@ config {
 }
 
 CREATE TEMP FUNCTION AJUSTAR_DECIMAL(coluna STRING) AS (
-  REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(coluna, r'\.', ''), r'\,', '.'), r'^$', '0.0')
+  CASE
+    WHEN REGEXP_CONTAINS(coluna, r'\-$') THEN
+      CONCAT('-', LTRIM(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(coluna, r'\.', ''), r'\,', '.'), r'\-$', '')))
+     WHEN coluna = '' OR REGEXP_CONTAINS(coluna, r'[A-z]') THEN '0.0'
+     ELSE REGEXP_REPLACE(REGEXP_REPLACE(coluna, r'\.', ''), r'\,', '.')
+   END
+
+  -- REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(coluna, r'\.', ''), r'\,', '.'), r'^$', '0.0')
 );
 
 CREATE TEMP FUNCTION AJUSTAR_DATA(coluna STRING) AS (
@@ -25,10 +32,10 @@ USING
     FROM (
       SELECT
         ROW_NUMBER() OVER (PARTITION BY N_material, Centro ORDER BY PARTITIONTIME DESC) AS dense_rank,
-        CAST(N_material AS INT64) N_material,
+        SAFE_CAST(N_material AS INT64) N_material,
         LTRIM(Desc_material) AS Desc_material,
         LTRIM(Grupo_Mercadorias) AS Grupo_Mercadorias,
-        CAST(Centro AS INT64) AS Centro,
+        SAFE_CAST(Centro AS INT64) AS Centro,
         CAST(AJUSTAR_DATA(Data_Inicio) AS DATE) AS Data_Inicio,
         CAST(AJUSTAR_DATA(Data_Fim) AS DATE) AS Data_Fim,
         CAST(AJUSTAR_DECIMAL(Qtde_Itens_Material) AS NUMERIC) AS Qtde_Itens_Material,
