@@ -10,8 +10,6 @@ CREATE TEMP FUNCTION AJUSTAR_DECIMAL(coluna STRING) AS (
      WHEN coluna = '' OR REGEXP_CONTAINS(coluna, r'[A-z]') THEN '0.0'
      ELSE REGEXP_REPLACE(REGEXP_REPLACE(coluna, r'\.', ''), r'\,', '.')
    END
-
-  -- REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(coluna, r'\.', ''), r'\,', '.'), r'^$', '0.0')
 );
 
 CREATE TEMP FUNCTION AJUSTAR_DATA(coluna STRING) AS (

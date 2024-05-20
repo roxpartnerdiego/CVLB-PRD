@@ -4,7 +4,12 @@ config {
 }
 
 CREATE TEMP FUNCTION AJUSTAR_DECIMAL(coluna STRING) AS (
-  REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(coluna, r'\.', ''), r'\,', '.'), r'^$', '0.0')
+  CASE
+    WHEN REGEXP_CONTAINS(coluna, r'\-$') THEN
+      CONCAT('-', LTRIM(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(coluna, r'\.', ''), r'\,', '.'), r'\-$', '')))
+     WHEN coluna = '' OR REGEXP_CONTAINS(coluna, r'[A-z]') THEN '0.0'
+     ELSE REGEXP_REPLACE(REGEXP_REPLACE(coluna, r'\.', ''), r'\,', '.')
+   END
 );
 
 CREATE TEMP FUNCTION AJUSTAR_DATA(coluna STRING) AS (
@@ -25,10 +30,10 @@ USING
     FROM (
       SELECT
         ROW_NUMBER() OVER (PARTITION BY Material, Descricao_Material ORDER BY PARTITIONTIME DESC) AS dense_rank,
-        CAST(LTRIM(Material) AS INT64) AS Material,
+        SAFE_CAST(LTRIM(Material) AS INT64) AS Material,
         LTRIM(Descricao_Material) AS Descricao_Material,
         LTRIM(GrpMercadoria) AS GrpMercadoria,
-        CAST(Loja AS INT64) AS Loja,
+        SAFE_CAST(Loja AS INT64) AS Loja,
         CAST(AJUSTAR_DATA(Data) AS DATE) AS Data,
         CAST(AJUSTAR_DATA(Data_Fim) AS DATE) AS Data_Fim,
         CAST(AJUSTAR_DECIMAL(Quantidade) AS NUMERIC) AS Quantidade,
