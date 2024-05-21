@@ -29,7 +29,7 @@ USING
         PARTITIONTIME)
     FROM (
       SELECT
-        ROW_NUMBER() OVER (PARTITION BY Material, Descricao_Material ORDER BY PARTITIONTIME DESC) AS dense_rank,
+        ROW_NUMBER() OVER (PARTITION BY Material, Descricao_Material, Loja ORDER BY PARTITIONTIME DESC) AS dense_rank,
         SAFE_CAST(LTRIM(Material) AS INT64) AS Material,
         LTRIM(Descricao_Material) AS Descricao_Material,
         LTRIM(GrpMercadoria) AS GrpMercadoria,
