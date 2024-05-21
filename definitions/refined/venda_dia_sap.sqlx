@@ -1,4 +1,5 @@
 config {
+    dependencies: ["trusted-vendas_venda_dia_sap_cev", "trusted-SAP_ZMMR028_CEV", "trusted-SAP_ZFIR023_CEV"],
     tags: ["cubo-vendas", "venda_dia_sap"]
 }
 
