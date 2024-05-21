@@ -1,7 +1,7 @@
 config {
     type: "incremental",
     schema: "RAW",
-    tags: ["sap", "cubo-estoque"]
+    tags: ["sap", "cubo-wms"]
 }
 
 SELECT 

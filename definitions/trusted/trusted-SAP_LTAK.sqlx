@@ -1,6 +1,6 @@
 config {
     dependencies: ["SAP_LTAK"],
-    tags: ["sap", "cubo-estoque"]
+    tags: ["sap", "cubo-wms"]
 }
 
 MERGE
