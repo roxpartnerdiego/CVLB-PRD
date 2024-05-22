@@ -64,7 +64,9 @@ FROM
   TABELA) S
 ON
   T.Material = S.Material
+  AND T.Loja = S.Loja
   AND T.Descricao_Material = S.Descricao_Material
+  AND T.Data = S.Data
   WHEN MATCHED THEN UPDATE SET 
   T.Material = S.Material,
   T.Descricao_Material = S.Descricao_Material,
