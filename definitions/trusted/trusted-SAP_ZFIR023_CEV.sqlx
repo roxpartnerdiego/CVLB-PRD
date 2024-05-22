@@ -29,7 +29,7 @@ USING
         PARTITIONTIME)
     FROM (
       SELECT
-        ROW_NUMBER() OVER (PARTITION BY Material, Loja, Data, Valor ORDER BY PARTITIONTIME DESC) AS dense_rank,
+        ROW_NUMBER() OVER (PARTITION BY Material, Loja, Data ORDER BY PARTITIONTIME DESC) AS dense_rank,
         SAFE_CAST(LTRIM(Material) AS INT64) AS Material,
         LTRIM(Descricao_Material) AS Descricao_Material,
         LTRIM(GrpMercadoria) AS GrpMercadoria,
@@ -130,3 +130,9 @@ VALUES
     S.Total_Imposto,
     S.Custo,
     S.Comissao );
+
+
+DELETE FROM `TRUSTED.SAP_ZFIR023_CEV`
+WHERE Material IS NULL
+AND Loja IS NULL
+AND Data IS NULL;
