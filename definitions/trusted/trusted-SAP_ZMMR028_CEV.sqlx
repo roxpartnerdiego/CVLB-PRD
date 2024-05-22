@@ -65,6 +65,8 @@ FROM
 ON
   T.N_material = S.N_material
   AND T.Centro = S.Centro
+  AND T.Desc_material = S.Desc_material
+  AND T.Data_Inicio = S.Data_Inicio
   WHEN MATCHED THEN UPDATE SET 
   T.N_material = S.N_material,
   T.Desc_material = S.Desc_material,
