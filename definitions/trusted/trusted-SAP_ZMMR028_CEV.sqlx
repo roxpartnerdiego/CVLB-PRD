@@ -130,3 +130,8 @@ VALUES
     S.Total_Impostos,
     S.Somatorio_CMM,
     S.Somatorio_Comissao );
+
+DELETE FROM `TRUSTED.SAP_ZMMR028_CEV`
+WHERE N_material IS NULL
+AND Centro IS NULL
+AND Data_Inicio IS NULL;
