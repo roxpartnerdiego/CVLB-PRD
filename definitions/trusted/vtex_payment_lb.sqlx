@@ -35,7 +35,7 @@ WITH
       dense_rank
     FROM (
       SELECT
-        ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY PARTITIONTIME DESC) AS dense_rank,
+        ROW_NUMBER() OVER (PARTITION BY order_id, payment_id ORDER BY PARTITIONTIME DESC) AS dense_rank,
         *
       FROM
         `RAW.vtex_payment_lb` A ) ) )
@@ -45,3 +45,6 @@ FROM
   TABLE
 WHERE
   dense_rank=1
+ORDER BY
+  order_id,
+  payment_id

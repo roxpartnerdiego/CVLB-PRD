@@ -6,7 +6,6 @@ config {
     dependencies: ["archive_vtex_ticket_lb"]
 }
 
-
 WITH
   TABLE AS (
   SELECT
@@ -70,7 +69,7 @@ WITH
       dense_rank
     FROM (
       SELECT
-        ROW_NUMBER() OVER (PARTITION BY customer_id,order_id ORDER BY PARTITIONTIME DESC) AS dense_rank,
+        ROW_NUMBER() OVER (PARTITION BY customer_id, order_id ORDER BY PARTITIONTIME DESC) AS dense_rank,
         *
       FROM
         `RAW.vtex_ticket_lb` A ) ) )
@@ -80,3 +79,6 @@ FROM
   TABLE
 WHERE
   dense_rank=1
+ORDER BY
+  customer_id,
+  order_id
